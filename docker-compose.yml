@@ -1,0 +1,25 @@
+version: '3.5'
+services:
+  jenkins-master:
+    image: jenkins:latest
+    volumes:
+      - ~/data/jenkins-master:/var/jenkins_home
+    networks:
+      - jenkins_bridge
+    ports:
+      - 9080:8080
+      - 51000:50000
+  jenkins-slave:
+    image: jenkins/jnlp-slave:latest
+    depends_on:
+      - jenkins-master
+    volumes:
+      - ~/data/jenkins-slave:/home/jenkins/agent
+    env_file:
+      - ./jenkins.env
+    networks:
+      - jenkins_bridge
+networks:
+  jenkins_bridge:
+    driver: bridge
+
