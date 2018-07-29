@@ -17,6 +17,8 @@ services:
       - ~/data/jenkins-slave:/home/jenkins/agent
     env_file:
       - ./jenkins.env
+    links:
+      - jenkins-master
     networks:
       - jenkins_bridge
 networks:
